@@ -1,0 +1,37 @@
+/* banderas en CSS (copiadas de nave_proyecto/nave/style.css) */
+.flag { position: relative; display: inline-block; flex: none; width: 36px; height: 24px; border: 3px solid var(--ink); border-radius: 5px; overflow: hidden; vertical-align: -6px; background: #ccd; }
+.flag.arg { background: linear-gradient(#74acdf 33.3%, #fff 33.3% 66.6%, #74acdf 66.6%); }
+.flag.arg::after { content: ''; position: absolute; left: 50%; top: 50%; width: 22%; height: 30%; transform: translate(-50%, -50%); border-radius: 50%; background: #f6b40e; }
+.flag.mex { background: linear-gradient(90deg, #006847 33.3%, #fff 33.3% 66.6%, #ce1126 66.6%); }
+.flag.mex::after { content: ''; position: absolute; left: 50%; top: 50%; width: 18%; height: 26%; transform: translate(-50%, -50%); border-radius: 50%; background: #8c5a2b; }
+.flag.esp { background: linear-gradient(#aa151b 25%, #f1bf00 25% 75%, #aa151b 75%); }
+.flag.col { background: linear-gradient(#fcd116 50%, #003893 50% 75%, #ce1126 75%); }
+.flag.chl { background: linear-gradient(#fff 50%, #d52b1e 50%); }
+.flag.chl::after { content: ''; position: absolute; left: 0; top: 0; width: 33%; height: 50%; background: #0039a6; }
+.flag.per { background: linear-gradient(90deg, #d91023 33.3%, #fff 33.3% 66.6%, #d91023 66.6%); }
+.flag.bra { background: #009c3b; }
+.flag.bra::before { content: ''; position: absolute; left: 50%; top: 50%; width: 62%; height: 62%; background: #ffdf00; transform: translate(-50%, -50%) scaleY(.68) rotate(45deg); }
+.flag.bra::after { content: ''; position: absolute; left: 50%; top: 50%; width: 30%; height: 45%; border-radius: 50%; background: #002776; transform: translate(-50%, -50%); }
+.flag.cub { background: linear-gradient(#002a8f 20%, #fff 20% 40%, #002a8f 40% 60%, #fff 60% 80%, #002a8f 80%); }
+.flag.cub::after { content: ''; position: absolute; left: 0; top: 0; width: 46%; height: 100%; background: #cf142b; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.flag.ind { background: linear-gradient(#ff9933 33.3%, #fff 33.3% 66.6%, #138808 66.6%); }
+.flag.ind::after { content: ''; position: absolute; left: 50%; top: 50%; width: 22%; height: 30%; transform: translate(-50%, -50%); border-radius: 50%; border: 3px solid #000080; box-sizing: border-box; }
+.flag.eng { background: linear-gradient(90deg, transparent 42%, #ce1124 42% 58%, transparent 58%), linear-gradient(#fff 40%, #ce1124 40% 60%, #fff 60%); }
+.flag.ury { background: repeating-linear-gradient(#fff 0 11.11%, #0038a8 11.11% 22.22%); }
+.flag.ury::after { content: ''; position: absolute; left: 0; top: 0; width: 40%; height: 55.5%; background: #fff radial-gradient(circle, #fcd116 0 32%, transparent 34%); }
+.flag.ven { background: linear-gradient(#ffcc00 33.3%, #00247d 33.3% 66.6%, #cf142b 66.6%); }
+.flag.ecu { background: linear-gradient(#ffdd00 50%, #034ea2 50% 75%, #ed1c24 75%); }
+.flag.mar { background: #c1272d; }
+.flag.mar::after { content: ''; position: absolute; left: 50%; top: 50%; width: 44%; height: 66%; transform: translate(-50%, -50%); background: #006233; clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.flag.hnd { background: linear-gradient(#0073cf 33.3%, #fff 33.3% 66.6%, #0073cf 66.6%); }
+.flag.cri { background: linear-gradient(#002b7f 16.6%, #fff 16.6% 33.3%, #ce1126 33.3% 66.6%, #fff 66.6% 83.3%, #002b7f 83.3%); }
+.flag.dom { background: linear-gradient(90deg, transparent 44%, #fff 44% 56%, transparent 56%), linear-gradient(transparent 40%, #fff 40% 60%, transparent 60%), conic-gradient(#ce1126 0 25%, #002d62 0 50%, #ce1126 0 75%, #002d62 0); }
+.flag.gtm { background: linear-gradient(90deg, #4997d0 33.3%, #fff 33.3% 66.6%, #4997d0 66.6%); }
+.flag.pan { background: conic-gradient(#d21034 0 25%, #fff 0 50%, #005293 0 75%, #fff 0); }
+.flag.pry { background: linear-gradient(#d52b1e 33.3%, #fff 33.3% 66.6%, #0038a8 66.6%); }
+.flag.ita { background: linear-gradient(90deg, #009246 33.3%, #fff 33.3% 66.6%, #ce2b37 66.6%); }
+.flag.slv { background: linear-gradient(#0047ab 33.3%, #fff 33.3% 66.6%, #0047ab 66.6%); }
+.flag.nic { background: linear-gradient(#0067c6 33.3%, #fff 33.3% 66.6%, #0067c6 66.6%); }
+.flag.pri { background: repeating-linear-gradient(#ed0000 0 20%, #fff 20% 40%); }
+.flag.pri::after { content: ''; position: absolute; left: 0; top: 0; width: 60%; height: 100%; background: #0050f0; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.flag.bol { background: linear-gradient(#d52b1e 33.3%, #f9e300 33.3% 66.6%, #007934 66.6%); }

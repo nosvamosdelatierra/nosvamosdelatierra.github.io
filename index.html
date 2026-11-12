@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manifiesto de pasajeros · Nos Vamos de la Tierra</title>
+<meta name="description" content="Busca tu nombre y mira tu pase de abordar: nave, asiento, bandera e insignias. 1 seguidor = 1 pasajero.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="flags.css">
+<style>
+  :root { --ink: #1d2240; --yel: #ffc93c; --red: #ff3b5c; --blue: #3d7bff; --green: #2fbf71; --sky1: #7cc6ff; --sky2: #cfeeff; --card: #fff; --muted: #5b6283; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font: 600 16px/1.4 Nunito, system-ui, sans-serif; color: var(--ink); background: linear-gradient(180deg, var(--sky1), var(--sky2) 420px, #eef6ff 900px); min-height: 100vh; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 48px; }
+  h1, h2, .lil { font-family: 'Lilita One', system-ui, sans-serif; font-weight: 400; letter-spacing: .3px; }
+  header { text-align: center; padding: 28px 0 8px; }
+  .brand { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: #fff; border-radius: 999px; padding: 6px 14px; font: 800 13px Nunito, sans-serif; letter-spacing: 1px; }
+  h1 { font-size: clamp(34px, 9vw, 56px); line-height: 1; margin: 14px 0 6px; color: #fff; -webkit-text-stroke: 8px var(--ink); paint-order: stroke fill; text-shadow: 0 6px 0 var(--ink); }
+  .sub { font-weight: 800; margin: 0 0 16px; }
+  .count { display: inline-block; background: var(--card); border: 4px solid var(--ink); border-radius: 22px; box-shadow: 0 6px 0 var(--ink); padding: 8px 22px 10px; }
+  .count b { display: block; font: 400 clamp(40px, 11vw, 64px)/1 'Lilita One', sans-serif; font-variant-numeric: tabular-nums; }
+  .count span { font-weight: 900; font-size: 13px; letter-spacing: 1.5px; color: var(--muted); }
+  .card { background: var(--card); border: 4px solid var(--ink); border-radius: 24px; box-shadow: 0 6px 0 var(--ink); padding: 18px; margin-top: 22px; }
+  h2 { font-size: 26px; margin: 0 0 10px; }
+  .search { position: relative; margin-top: 22px; display: flex; gap: 10px; }
+  .search .btn { flex: none; font-size: 17px; padding: 0 18px; border-width: 4px; border-radius: 20px; box-shadow: 0 6px 0 var(--ink); }
+  .search .btn:disabled { opacity: .6; cursor: wait; }
+  .search input { flex: 1; min-width: 0; font: 800 20px Nunito, sans-serif; color: var(--ink); padding: 16px 14px 16px 52px; border: 4px solid var(--ink); border-radius: 20px; box-shadow: 0 6px 0 var(--ink); outline: none; background: #fff; }
+  .search input:focus { border-color: var(--blue); box-shadow: 0 6px 0 var(--blue); }
+  .search::before { content: '🔎'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 22px; pointer-events: none; }
+  .pass .why { margin: 0 16px 16px; background: #fff6d6; border: 3px dashed var(--ink); border-radius: 14px; padding: 10px 12px; font-size: 14px; font-weight: 800; }
+  .hint { font-size: 14px; color: var(--muted); margin: 10px 4px 0; }
+  .results { margin-top: 12px; display: grid; gap: 8px; }
+  .res { display: flex; align-items: center; gap: 10px; width: 100%; background: #fff; border: 3px solid var(--ink); border-radius: 14px; padding: 10px 12px; cursor: pointer; font: inherit; color: inherit; text-align: left; }
+  .res:hover, .res:focus-visible { background: #fff6d6; outline: none; }
+  .res .tx { flex: 1; min-width: 0; }
+  .res .nm { display: block; font-weight: 900; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .res .st { display: block; font-size: 12px; font-weight: 900; color: var(--muted); letter-spacing: .5px; }
+  .res .go { font-weight: 900; color: var(--blue); }
+  .nf { background: #fff; border: 3px dashed var(--ink); border-radius: 14px; padding: 12px; font-weight: 800; }
+  /* pase de abordar */
+  .pass { margin-top: 22px; background: #fff; border: 4px solid var(--ink); border-radius: 24px; box-shadow: 0 8px 0 var(--ink); overflow: hidden; }
+  .pass .ph { display: flex; justify-content: space-between; gap: 8px; background: var(--ink); color: #fff; padding: 10px 16px; font: 900 13px Nunito, sans-serif; letter-spacing: 1.2px; }
+  .pass .pb { padding: 16px; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+  .pass .pb .flag { width: 78px; height: 52px; border-width: 4px; border-radius: 9px; }
+  .pass .noflag { width: 78px; height: 52px; border: 4px dashed var(--ink); border-radius: 9px; display: grid; place-items: center; font-size: 26px; }
+  .pass .pu { font: 400 clamp(26px, 7vw, 38px)/1.05 'Lilita One', sans-serif; overflow-wrap: anywhere; }
+  .pass .pr { font-weight: 900; color: var(--blue); font-size: 14px; letter-spacing: .5px; }
+  .pass .grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 3px dashed #c9cfe3; }
+  .pass .grid > div { padding: 12px 10px; text-align: center; }
+  .pass .grid > div + div { border-left: 3px dashed #c9cfe3; }
+  .pass .k { font: 900 11px Nunito, sans-serif; color: var(--muted); letter-spacing: 1.2px; }
+  .pass .v { font: 400 26px/1.1 'Lilita One', sans-serif; }
+  .pass .badges { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 16px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; background: #eef1f7; border: 3px solid var(--ink); border-radius: 999px; padding: 4px 10px; font-weight: 900; font-size: 13px; }
+  .chip.gold { background: var(--yel); }
+  .pass .pf { display: flex; gap: 8px; padding: 0 16px 16px; flex-wrap: wrap; }
+  .btn { font: 900 15px Nunito, sans-serif; color: #fff; background: var(--blue); border: 3px solid var(--ink); border-radius: 14px; box-shadow: 0 4px 0 var(--ink); padding: 10px 14px; cursor: pointer; }
+  .btn.sec { background: #fff; color: var(--ink); }
+  .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  /* naves */
+  .ships { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .ship { border: 3px solid var(--ink); border-radius: 16px; padding: 10px 12px; background: #f5f8ff; }
+  .ship .sn { font: 400 22px 'Lilita One', sans-serif; }
+  .ship .ss { font-size: 13px; font-weight: 900; color: var(--muted); }
+  .ship .bar { height: 12px; border: 3px solid var(--ink); border-radius: 8px; background: #fff; overflow: hidden; margin-top: 6px; }
+  .ship .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--green), var(--yel)); }
+  .ship.lost { background: #fff0f2; }
+  .ship.lost .ss b { color: var(--red); }
+  /* ranking */
+  .rk { display: grid; grid-template-columns: 24px auto 1fr 1fr auto; align-items: center; gap: 8px 10px; }
+  .rk .n { font-weight: 900; color: var(--muted); text-align: right; }
+  .rk .c { font-weight: 900; }
+  .rk .bar { height: 14px; border: 3px solid var(--ink); border-radius: 8px; background: #eef1f7; overflow: hidden; }
+  .rk .bar i { display: block; height: 100%; }
+  .rk .p { font: 400 20px 'Lilita One', sans-serif; text-align: right; }
+  .legend { display: grid; gap: 8px; }
+  .legend div { display: flex; gap: 10px; align-items: baseline; }
+  details { border-top: 3px dashed #c9cfe3; padding: 10px 0; }
+  details:first-of-type { border-top: 0; }
+  summary { font-weight: 900; cursor: pointer; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 12px; font-weight: 900; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+  @media (max-width: 420px) { .rk { grid-template-columns: 20px auto 1fr auto; } .rk .bar { display: none; } .rk .bar.keep { display: block; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">🚀 NOS VAMOS DE LA TIERRA</div>
+    <h1>MANIFIESTO DE PASAJEROS</h1>
+    <p class="sub">1 seguidor = 1 pasajero · Busca tu nombre y mira tu pase de abordar</p>
+    <div class="count"><b id="total">0</b><span>PASAJEROS A BORDO</span></div>
+  </header>
+
+  <form class="search" id="sf"><input id="q" type="search" placeholder="Tu nombre de usuario exacto…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Tu nombre de usuario"><button class="btn" id="go" type="submit">BUSCAR</button></form>
+  <p class="hint" id="hint">Cargando la lista…</p>
+  <div class="results" id="results"></div>
+  <div id="pass"></div>
+
+  <section class="card">
+    <h2>🚀 Las naves de la flota</h2>
+    <p class="hint" style="margin:0 0 12px">Cada 5.000 pasajeros se llenó una nave. Tu asiento dice en cuál viajas.</p>
+    <div class="ships" id="ships"></div>
+  </section>
+
+  <section class="card">
+    <h2>🌍 Territorio en el planeta</h2>
+    <p class="hint" style="margin:0 0 12px">Cada país recibe territorio según los pasajeros que trajo. Comenta tu bandera en los videos para sumar.</p>
+    <div class="rk" id="rank"></div>
+  </section>
+
+  <section class="card">
+    <h2>🏅 Insignias</h2>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="card">
+    <h2>❓ Preguntas</h2>
+    <details><summary>No aparezco en la lista</summary><p>La lista se arma con quienes comentan los videos y con quienes siguen la cuenta durante los directos, desde el 5 de noviembre. Si no apareces, comenta 🚀 y tu bandera en el último video: la lista se actualiza después de cada video.</p></details>
+    <details><summary>¿Por qué no sale mi bandera?</summary><p>Tu bandera sale solo si la escribiste en un comentario o en un directo (🇪🇸, 🇲🇽, 🇦🇷… o el nombre del país). Si te sumaste siguiendo la cuenta sin comentarla, todavía no sabemos de dónde eres. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</p></details>
+    <details><summary>¿Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Cada 5.000 asientos hay una nave.</p></details>
+    <details><summary>No quiero aparecer</summary><p>Mándale un mensaje directo a @nosvamosdelatierra con tu nombre de usuario y te quitamos de la lista en la próxima actualización.</p></details>
+    <details><summary>¿Qué se muestra de mí?</summary><p>Tu pase solo aparece si alguien escribe tu nombre de usuario exacto: no hay una lista de nombres para mirar ni descargar. El pase muestra la bandera que comentaste, tu asiento y tus insignias. Nunca el texto de tus comentarios.</p></details>
+  </section>
+
+  <footer>Hecho por la flota de @nosvamosdelatierra · Actualizado: <span id="upd"></span></footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const COUNTRY = { esp: 'ESPAÑA', mex: 'MÉXICO', arg: 'ARGENTINA', col: 'COLOMBIA', chl: 'CHILE', per: 'PERÚ', ven: 'VENEZUELA', ury: 'URUGUAY', ecu: 'ECUADOR', bol: 'BOLIVIA', usa: 'EE. UU.',
+  bra: 'BRASIL', mar: 'MARRUECOS', hnd: 'HONDURAS', cri: 'COSTA RICA', cub: 'CUBA', dom: 'R. DOMINICANA', gtm: 'GUATEMALA', pan: 'PANAMÁ', pry: 'PARAGUAY', ita: 'ITALIA', slv: 'EL SALVADOR', nic: 'NICARAGUA', pri: 'PUERTO RICO' };
+const BADGES = {
+  f: ['🚀', 'FUNDADOR', 'Llegó antes del 9 de noviembre, cuando la flota recién se armaba.', true],
+  d: ['🛫', 'EN EL DESPEGUE', 'Estaba la noche del despegue (11 de noviembre).', false],
+  k: ['🕵️', 'DETECTIVE', 'Elegido para investigar al ladrón de la paella.', true],
+  c: ['👨‍✈️', 'COPILOTO', 'Viaja al lado del capitán.', true],
+  v: ['⭐', 'VIP', 'Mandó un regalo en un directo.', true],
+  n: ['🎬', 'SALIÓ EN UN VIDEO', 'Su nombre apareció en un video de la serie.', false],
+};
+const SHIPC = ['#ff4f5e', '#3d7bff', '#2fbf71', '#9b5cff', '#ffc93c', '#ff7ad9', '#3cc6dd', '#ff7a45'];
+const PER = 5000;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+// Igual que clave() en armar.py: la lista no trae nombres, solo la huella de cada uno.
+const limpio = s => String(s).trim().replace(/^@+/, '');
+const clave = s => { const t = limpio(s); return t.toLowerCase().normalize('NFD').replace(/[^a-z0-9._]/g, '') || t.toLowerCase(); };
+async function huella(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nvdlt:' + clave(s))); return [...new Uint8Array(b)].slice(0, 8).map(x => x.toString(16).padStart(2, '0')).join(''); }
+const flagHTML = (f, cls = '') => f ? `<span class="flag ${f} ${cls}" title="${COUNTRY[f] || ''}"></span>` : '';
+let DATA = null, IDX = new Map();
+
+function toast(t) { const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 1800); }
+function countUp(el, to) { const t0 = performance.now(), d = 900; const step = now => { const k = Math.min(1, (now - t0) / d); el.textContent = fmt(Math.round(to * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+
+// Solo muestra el pase si el nombre coincide exacto. Nunca lista otros nombres.
+async function search(q, scroll = true) {
+  const u = limpio(q);
+  $('pass').innerHTML = ''; $('results').innerHTML = '';
+  if (!u) { $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.'; return; }
+  const i = IDX.get(await huella(u));
+  if (i === undefined) { $('hint').textContent = ''; $('results').innerHTML = `<div class="nf">No encontramos a <b>${esc(u)}</b> 😢 Revisa que esté escrito igual que en TikTok o Instagram. Si no estás, comenta 🚀 y tu bandera en el último video y te sumamos en la próxima actualización.</div>`; history.replaceState(null, '', location.pathname); return; }
+  $('hint').textContent = '';
+  showPass(i, u, scroll);
+}
+function showPass(i, u, scroll = true) {
+  const [, f, seat, b, puesto] = DATA.p[i], nave = Math.ceil(seat / PER), lost = nave === Math.ceil(DATA.total / PER);
+  const chips = [...b].filter(c => BADGES[c]).map(c => `<span class="chip ${BADGES[c][3] ? 'gold' : ''}">${BADGES[c][0]} ${BADGES[c][1]}</span>`).join('');
+  $('pass').innerHTML = `<div class="pass" id="passcard">
+    <div class="ph"><span>✈️ PASE DE ABORDAR</span><span>VUELO NVT-001</span></div>
+    <div class="pb">${f ? flagHTML(f) : '<div class="noflag">🧑‍🚀</div>'}<div><div class="pu">${esc(u)}</div><div class="pr">${puesto ? esc(puesto) + ' · ' : ''}${f ? COUNTRY[f] || '' : 'SIN BANDERA · ¡COMÉNTALA!'}</div></div></div>
+    <div class="grid"><div><div class="k">NAVE</div><div class="v" style="color:${SHIPC[(nave - 1) % SHIPC.length]}">${nave}</div></div><div><div class="k">ASIENTO</div><div class="v">${fmt(seat)}</div></div><div><div class="k">DESTINO</div><div class="v" style="font-size:18px">🪐 PLANETA NUEVO</div></div></div>
+    ${chips ? `<div class="badges">${chips}</div>` : ''}
+    ${lost ? `<div class="badges"><span class="chip" style="background:#ffe1e6">📡 Tu nave dejó de responder… ¿la vamos a buscar? Vota en el último video</span></div>` : ''}
+    ${f ? '' : `<div class="why">🏳️ <b>¿Por qué no sale tu bandera?</b> Porque todavía no la vimos en tus comentarios. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</div>`}
+    <div class="pf"><button class="btn" id="share">🔗 Copiar enlace de mi pase</button><button class="btn sec" id="again">🔎 Buscar otro</button></div></div>`;
+  history.replaceState(null, '', '#p=' + encodeURIComponent(u));
+  $('share').onclick = () => { const url = location.href; (navigator.share ? navigator.share({ title: 'Mi pase de abordar', text: `Viajo en la nave ${nave}, asiento ${fmt(seat)} 🚀`, url }).catch(() => {}) : navigator.clipboard.writeText(url).then(() => toast('¡Enlace copiado!'))); };
+  $('again').onclick = () => { $('q').value = ''; $('pass').innerHTML = ''; $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.'; history.replaceState(null, '', location.pathname); window.scrollTo({ top: 0, behavior: 'smooth' }); $('q').focus(); };
+  if (scroll) $('passcard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function renderShips() {
+  const nShips = Math.ceil(DATA.total / PER), cnt = Array(nShips).fill(0);
+  DATA.p.forEach(r => cnt[Math.ceil(r[2] / PER) - 1]++);
+  $('ships').innerHTML = cnt.map((c, i) => { const last = i === nShips - 1, filled = last ? DATA.total - i * PER : PER;
+    return `<div class="ship ${last ? 'lost' : ''}"><div class="sn" style="color:${SHIPC[i % SHIPC.length]}">🚀 NAVE ${i + 1}</div>
+      <div class="ss">${last ? `<b>📡 SIN SEÑAL</b> · ${fmt(filled)} / ${fmt(PER)}` : '✅ LLENA · EN EL ESPACIO'}</div>
+      <div class="bar"><i style="width:${filled / PER * 100}%"></i></div><div class="ss" style="margin-top:4px">${fmt(c)} en esta lista</div></div>`; }).join('');
+}
+function renderRank() {
+  const R = DATA.ranking, otros = Math.max(0, 100 - R.reduce((a, r) => a + r[2], 0)), max = R[0][2];
+  const col = { esp: '#ff3b5c', mex: '#14b85a', arg: '#3d7bff', col: '#ffd23c', chl: '#ff7ad9', ven: '#9b5cff' };
+  $('rank').innerHTML = R.map((r, i) => `<span class="n">${i + 1}</span>${flagHTML(r[0])}<span class="c">${esc(r[1])}</span><span class="bar"><i style="width:${r[2] / max * 100}%;background:${col[r[0]] || '#3d7bff'}"></i></span><span class="p">${String(r[2]).replace('.', ',')} %</span>`).join('')
+    + `<span class="n">·</span><span>🌐</span><span class="c">OTROS PAÍSES</span><span class="bar"><i style="width:${otros / max * 100}%;background:#c9cfe3"></i></span><span class="p">${otros.toFixed(1).replace('.', ',')} %</span>`;
+}
+function renderLegend() { $('legend').innerHTML = Object.values(BADGES).map(b => `<div><span class="chip ${b[3] ? 'gold' : ''}">${b[0]} ${b[1]}</span><span>${b[2]}</span></div>`).join(''); }
+
+$('sf').addEventListener('submit', async e => { e.preventDefault(); if (!DATA) return; $('go').disabled = true; try { await search($('q').value); } finally { $('go').disabled = false; } });
+
+fetch('data/pasajeros.json').then(r => r.json()).then(d => {
+  DATA = d; d.p.forEach((r, i) => { if (!IDX.has(r[0])) IDX.set(r[0], i); });
+  countUp($('total'), d.total); $('upd').textContent = d.actualizado;
+  $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.';
+  renderShips(); renderRank(); renderLegend();
+  const m = location.hash.match(/^#p=(.+)$/); if (m) { $('q').value = decodeURIComponent(m[1]); search($('q').value, false); }
+}).catch(() => { $('hint').textContent = 'No se pudo cargar la lista. Prueba recargar la página.'; });
+</script>
+</body>
+</html>
