@@ -219,5 +219,23 @@ fetch('data/pasajeros.json').then(r => r.json()).then(d => {
   const m = location.hash.match(/^#p=(.+)$/); if (m) { $('q').value = decodeURIComponent(m[1]); search($('q').value, false); }
 }).catch(() => { $('hint').textContent = 'No se pudo cargar la lista. Prueba recargar la página.'; });
 </script>
+<script>
+// Contador de visitas (GoatCounter: sin cookies ni datos personales). Pedido de Monetización, aprobado por German el 13-nov.
+// Privacidad: el nombre buscado queda en la dirección (#p=...), así que se cuenta SIEMPRE la ruta fija "/"
+// y de dónde viene la visita solo como sitio (https://www.tiktok.com/), nunca la dirección completa.
+// GOATCOUNTER = código de la cuenta que crea German. Vacío = sin contador. En la compu (localhost) no cuenta.
+const GOATCOUNTER = 'nosvamosdelatierra';
+if (GOATCOUNTER && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+  window.goatcounter = {
+    path: '/',
+    title: 'Manifiesto de pasajeros',
+    referrer: () => { try { return document.referrer ? new URL(document.referrer).origin + '/' : null; } catch (e) { return null; } },
+  };
+  const gc = document.createElement('script');
+  gc.async = true; gc.src = 'https://gc.zgo.at/count.js';
+  gc.dataset.goatcounter = `https://${GOATCOUNTER}.goatcounter.com/count`;
+  document.body.appendChild(gc);
+}
+</script>
 </body>
 </html>
