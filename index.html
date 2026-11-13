@@ -142,7 +142,7 @@ const BADGES = {
   n: ['🎬', 'SALIÓ EN UN VIDEO', 'Su nombre apareció en un video de la serie.', false],
 };
 const SHIPC = ['#ff4f5e', '#3d7bff', '#2fbf71', '#9b5cff', '#ffc93c', '#ff7ad9', '#3cc6dd', '#ff7a45'];
-const PER = 5000;
+const PER = 5000, PERDIDA = 5;   // la nave 5 es la que dejó de responder (Día 8)
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -167,14 +167,14 @@ async function search(q, scroll = true) {
   showPass(i, u, scroll);
 }
 function showPass(i, u, scroll = true) {
-  const [, f, seat, b, puesto] = DATA.p[i], nave = Math.ceil(seat / PER), lost = nave === Math.ceil(DATA.total / PER);
+  const [, f, seat, b, puesto] = DATA.p[i], nave = Math.ceil(seat / PER), lost = nave === PERDIDA;
   const chips = [...b].filter(c => BADGES[c]).map(c => `<span class="chip ${BADGES[c][3] ? 'gold' : ''}">${BADGES[c][0]} ${BADGES[c][1]}</span>`).join('');
   $('pass').innerHTML = `<div class="pass" id="passcard">
     <div class="ph"><span>✈️ PASE DE ABORDAR</span><span>VUELO NVT-001</span></div>
     <div class="pb">${f ? flagHTML(f) : '<div class="noflag">🧑‍🚀</div>'}<div><div class="pu">${esc(u)}</div><div class="pr">${puesto ? esc(puesto) + ' · ' : ''}${f ? COUNTRY[f] || '' : 'SIN BANDERA · ¡COMÉNTALA!'}</div></div></div>
     <div class="grid"><div><div class="k">NAVE</div><div class="v" style="color:${SHIPC[(nave - 1) % SHIPC.length]}">${nave}</div></div><div><div class="k">ASIENTO</div><div class="v">${fmt(seat)}</div></div><div><div class="k">DESTINO</div><div class="v" style="font-size:18px">🪐 PLANETA NUEVO</div></div></div>
     ${chips ? `<div class="badges">${chips}</div>` : ''}
-    ${lost ? `<div class="badges"><span class="chip" style="background:#ffe1e6">📡 Tu nave dejó de responder… ¿la vamos a buscar? Vota en el último video</span></div>` : ''}
+    ${lost ? `<div class="badges"><span class="chip" style="background:#ffe1e6">📡 Tu nave dejó de responder… Ya vamos a buscarla: mira el último video</span></div>` : ''}
     ${f ? '' : `<div class="why">🏳️ <b>¿Por qué no sale tu bandera?</b> Porque todavía no la vimos en tus comentarios. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</div>`}
     <div class="pf"><button class="btn" id="share">🔗 Copiar enlace de mi pase</button><button class="btn sec" id="again">🔎 Buscar otro</button></div></div>`;
   history.replaceState(null, '', '#p=' + encodeURIComponent(u));
@@ -185,9 +185,9 @@ function showPass(i, u, scroll = true) {
 function renderShips() {
   const nShips = Math.ceil(DATA.total / PER), cnt = Array(nShips).fill(0);
   DATA.p.forEach(r => cnt[Math.ceil(r[2] / PER) - 1]++);
-  $('ships').innerHTML = cnt.map((c, i) => { const last = i === nShips - 1, filled = last ? DATA.total - i * PER : PER;
-    return `<div class="ship ${last ? 'lost' : ''}"><div class="sn" style="color:${SHIPC[i % SHIPC.length]}">🚀 NAVE ${i + 1}</div>
-      <div class="ss">${last ? `<b>📡 SIN SEÑAL</b> · ${fmt(filled)} / ${fmt(PER)}` : '✅ LLENA · EN EL ESPACIO'}</div>
+  $('ships').innerHTML = cnt.map((c, i) => { const last = i === nShips - 1, lost = i + 1 === PERDIDA, filled = last ? DATA.total - i * PER : PER;
+    return `<div class="ship ${lost ? 'lost' : ''}"><div class="sn" style="color:${SHIPC[i % SHIPC.length]}">🚀 NAVE ${i + 1}</div>
+      <div class="ss">${lost ? `<b>📡 SIN SEÑAL</b> · ${fmt(filled)} / ${fmt(PER)}` : last && filled < PER ? `🟡 SUBIENDO PASAJEROS · ${fmt(filled)} / ${fmt(PER)}` : '✅ LLENA · EN EL ESPACIO'}</div>
       <div class="bar"><i style="width:${filled / PER * 100}%"></i></div><div class="ss" style="margin-top:4px">${fmt(c)} en esta lista</div></div>`; }).join('');
 }
 function renderRank() {
