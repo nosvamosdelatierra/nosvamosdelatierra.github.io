@@ -105,7 +105,7 @@
 
   <section class="card">
     <h2>🚀 Las naves de la flota</h2>
-    <p class="hint" style="margin:0 0 12px">Las naves 1 a 5 son las <b>fundadoras</b>: fueron las primeras en despegar, con 5.000 pasajeros cada una. Las 6 y 7 son <b>naves grandes</b>, de 50.000, y desde la 8 son <b>naves gigantes</b>, de 100.000. Tu asiento dice en cuál viajas.</p>
+    <p class="hint" style="margin:0 0 12px">La nave 1 es la <b>fundadora</b>: lleva a los 25.000 que ya estaban antes del primer despegue. Las demás son naves de 35.000. Tu asiento dice en cuál viajas.</p>
     <div class="ships" id="ships"></div>
   </section>
 
@@ -124,7 +124,7 @@
     <h2>❓ Preguntas</h2>
     <details><summary>No aparezco en la lista</summary><p>La lista se arma con quienes comentan los videos y con quienes siguen la cuenta durante los directos, desde el 5 de noviembre. Si no apareces, comenta 🚀 y tu bandera en el último video: la lista se actualiza después de cada video.</p></details>
     <details><summary>¿Por qué no sale mi bandera?</summary><p>Tu bandera sale solo si la escribiste en un comentario o en un directo (🇪🇸, 🇲🇽, 🇦🇷… o el nombre del país). Si te sumaste siguiendo la cuenta sin comentarla, todavía no sabemos de dónde eres. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</p></details>
-    <details><summary>¿Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Los primeros 25.000 viajan en las 5 naves fundadoras (5.000 cada una); después vienen las naves grandes, de 50.000 (naves 6 y 7), y desde la 8 las gigantes, de 100.000.</p></details>
+    <details><summary>¿Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Los primeros 25.000, los que estaban antes del primer despegue, viajan en la nave fundadora; después vienen las naves de 35.000.</p></details>
     <details><summary>No quiero aparecer</summary><p>Mándale un mensaje directo a @nosvamosdelatierra con tu nombre de usuario y te quitamos de la lista en la próxima actualización.</p></details>
     <details><summary>¿Qué se muestra de mí?</summary><p>Tu pase solo aparece si alguien escribe tu nombre de usuario exacto: no hay una lista de nombres para mirar ni descargar. El pase muestra la bandera que comentaste, tu asiento y tus insignias. Nunca el texto de tus comentarios.</p></details>
   </section>
@@ -136,7 +136,7 @@
 const COUNTRY = { esp: 'ESPAÑA', mex: 'MÉXICO', arg: 'ARGENTINA', col: 'COLOMBIA', chl: 'CHILE', per: 'PERÚ', ven: 'VENEZUELA', ury: 'URUGUAY', ecu: 'ECUADOR', bol: 'BOLIVIA', usa: 'EE. UU.',
   bra: 'BRASIL', mar: 'MARRUECOS', hnd: 'HONDURAS', cri: 'COSTA RICA', cub: 'CUBA', dom: 'R. DOMINICANA', gtm: 'GUATEMALA', pan: 'PANAMÁ', pry: 'PARAGUAY', ita: 'ITALIA', slv: 'EL SALVADOR', nic: 'NICARAGUA', pri: 'PUERTO RICO' };
 const BADGES = {
-  f: ['🚀', 'FUNDADOR', 'Llegó antes del 9 de noviembre, cuando la flota recién se armaba.', true],
+  f: ['🚀', 'FUNDADOR', 'Estaba antes del primer despegue: viaja en la nave fundadora.', true],
   d: ['🛫', 'EN EL DESPEGUE', 'Estaba la noche del despegue (11 de noviembre).', false],
   k: ['🕵️', 'DETECTIVE', 'Elegido para investigar al ladrón de la paella.', true],
   c: ['👨‍✈️', 'COPILOTO', 'Viaja al lado del capitán.', true],
@@ -144,10 +144,13 @@ const BADGES = {
   n: ['🎬', 'SALIÓ EN UN VIDEO', 'Su nombre apareció en un video de la serie.', false],
 };
 const SHIPC = ['#ff4f5e', '#3d7bff', '#2fbf71', '#9b5cff', '#ffc93c', '#ff7ad9', '#3cc6dd', '#ff7a45'];
-// Naves 1 a 5: las fundadoras, de 5.000 (despegaron el 12-nov; la 5 es la que dejó de responder, Día 8). Desde la 6: naves grandes de 50.000 (eran de 15.000; German pasó a 50.000 el 14-nov con 113.192 pasajeros para no pasar de 8 naves). Desde la 8: naves gigantes de 100.000 (German, 14-nov, con 168.609, para no pasar de 8 naves).
-// Decisión de German (13-nov): como mucho 8 naves. Cuando termine lo de la nave 5, la idea es pasar a 6 naves grandes y 2 chicas.
-const CHICA = 5000, GRANDE = 50000, GIGANTE = 100000, PERDIDA = 5, FUNDADORAS = 5, GRANDES_HASTA = 7;   // naves 6 y 7 grandes; desde la 8, gigantes
-const CAP = i => i < FUNDADORAS ? CHICA : i < GRANDES_HASTA ? GRANDE : GIGANTE;   // capacidad de la nave i (0 = nave 1)
+// Decisión de German (14-nov, con 168.609, para el Día 10, cuando se reactiva la nave 5): como mucho 8 naves.
+// Nave 1 = la fundadora, de 25.000: todos los que estaban antes del primer despegue (12-nov 00:09 UTC, ~23.400 pasajeros).
+// Naves 2 en adelante: de 35.000. Así la nave 5 queda llena y en el espacio (asientos 130.001–165.000). Con 8 naves alcanza hasta 270.000.
+// Antes: 1–5 de 5.000, 6–7 de 50.000, 8 de 100.000 (copia en el scratchpad del chat de comentarios).
+const FUNDADORA = 25000, NAVE = 35000, FUNDADORAS = 1, PERDIDA = 5;
+const NAVE5_REACTIVADA = true;   // false = la nave 5 sigue «sin señal» (como antes del Día 10)
+const CAP = i => i < FUNDADORAS ? FUNDADORA : NAVE;   // capacidad de la nave i (0 = nave 1)
 const START = i => { let s = 0; for (let k = 0; k < i; k++) s += CAP(k); return s; };   // asientos antes de la nave i
 const naveDe = seat => { let i = 0; while (seat > START(i + 1)) i++; return i + 1; };
 const $ = id => document.getElementById(id);
@@ -174,14 +177,16 @@ async function search(q, scroll = true) {
   showPass(i, u, scroll);
 }
 function showPass(i, u, scroll = true) {
-  const [, f, seat, b, puesto] = DATA.p[i], nave = naveDe(seat), lost = nave === PERDIDA;
-  const chips = [...b].filter(c => BADGES[c]).map(c => `<span class="chip ${BADGES[c][3] ? 'gold' : ''}">${BADGES[c][0]} ${BADGES[c][1]}</span>`).join('');
+  const [, f, seat, b, puesto] = DATA.p[i], nave = naveDe(seat), lost = nave === PERDIDA && !NAVE5_REACTIVADA;
+  const bb = nave <= FUNDADORAS && !b.includes('f') ? 'f' + b : b;   // todos los de la nave fundadora son fundadores
+  const chips = [...bb].filter(c => BADGES[c]).map(c => `<span class="chip ${BADGES[c][3] ? 'gold' : ''}">${BADGES[c][0]} ${BADGES[c][1]}</span>`).join('');
   $('pass').innerHTML = `<div class="pass" id="passcard">
     <div class="ph"><span>✈️ PASE DE ABORDAR</span><span>VUELO NVT-001</span></div>
     <div class="pb">${f ? flagHTML(f) : '<div class="noflag">🧑‍🚀</div>'}<div><div class="pu">${esc(u)}</div><div class="pr">${puesto ? esc(puesto) + ' · ' : ''}${f ? COUNTRY[f] || '' : 'SIN BANDERA · ¡COMÉNTALA!'}</div></div></div>
     <div class="grid"><div><div class="k">NAVE</div><div class="v" style="color:${SHIPC[(nave - 1) % SHIPC.length]}">${nave}</div></div><div><div class="k">ASIENTO</div><div class="v">${fmt(seat)}</div></div><div><div class="k">DESTINO</div><div class="v" style="font-size:18px">🪐 PLANETA NUEVO</div></div></div>
     ${chips ? `<div class="badges">${chips}</div>` : ''}
     ${lost ? `<div class="badges"><span class="chip" style="background:#ffe1e6">📡 Tu nave dejó de responder… Ya vamos a buscarla: mira el último video</span></div>` : ''}
+    ${nave === PERDIDA && NAVE5_REACTIVADA ? `<div class="badges"><span class="chip" style="background:#e3f7ea">🔋 Tu nave volvió a responder: mira el último video</span></div>` : ''}
     ${nave <= FUNDADORAS ? `<div class="badges"><span class="chip gold">⭐ NAVE FUNDADORA</span></div>` : ''}
     ${nave === naveDe(DATA.total) && DATA.total - START(nave - 1) < CAP(nave - 1) ? `<div class="badges"><span class="chip" style="background:#fff8e0">🌍 Tu nave está en la Tierra esperando pasajeros: invita a tus amigos y despega antes</span></div>` : ''}
     ${f ? '' : `<div class="why">🏳️ <b>¿Por qué no sale tu bandera?</b> Porque todavía no la vimos en tus comentarios. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</div>`}
@@ -194,11 +199,11 @@ function showPass(i, u, scroll = true) {
 function renderShips() {
   // cada nave va llena con su capacidad (conozcamos el nombre o no); la que no está llena espera en la Tierra
   const nShips = naveDe(DATA.total);
-  $('ships').innerHTML = Array.from({ length: nShips }, (_, i) => { const last = i === nShips - 1, lost = i + 1 === PERDIDA, fund = i < FUNDADORAS,
+  $('ships').innerHTML = Array.from({ length: nShips }, (_, i) => { const last = i === nShips - 1, lost = i + 1 === PERDIDA && !NAVE5_REACTIVADA, reac = i + 1 === PERDIDA && NAVE5_REACTIVADA, fund = i < FUNDADORAS,
       cap = CAP(i), filled = last ? DATA.total - START(i) : cap, waiting = last && filled < cap;
     return `<div class="ship ${lost ? 'lost' : ''} ${waiting ? 'wait' : ''}"><div class="sn" style="color:${SHIPC[i % SHIPC.length]}">🚀 NAVE ${i + 1}</div>
       ${fund ? '<div class="fund">⭐ FUNDADORA</div>' : ''}
-      <div class="ss">${lost ? `<b>📡 SIN SEÑAL</b> · ${fmt(cap)} / ${fmt(cap)}` : waiting ? `🌍 EN LA TIERRA · ESPERANDO PASAJEROS · ${fmt(filled)} / ${fmt(cap)}` : `✅ LLENA · EN EL ESPACIO · ${fmt(cap)}`}</div>
+      <div class="ss">${lost ? `<b>📡 SIN SEÑAL</b> · ${fmt(cap)} / ${fmt(cap)}` : waiting ? `🌍 EN LA TIERRA · ESPERANDO PASAJEROS · ${fmt(filled)} / ${fmt(cap)}` : reac ? `<b>🔋 REACTIVADA</b> · EN EL ESPACIO · ${fmt(cap)}` : `✅ LLENA · EN EL ESPACIO · ${fmt(cap)}`}</div>
       <div class="bar"><i style="width:${filled / cap * 100}%"></i></div></div>`; }).join('');
 }
 function renderRank() {
