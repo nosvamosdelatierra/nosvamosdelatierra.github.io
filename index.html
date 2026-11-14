@@ -105,7 +105,7 @@
 
   <section class="card">
     <h2>🚀 Las naves de la flota</h2>
-    <p class="hint" style="margin:0 0 12px">Las naves 1 a 5 son las <b>fundadoras</b>: fueron las primeras en despegar, con 5.000 pasajeros cada una. Desde la 6 son <b>naves grandes</b>, de 15.000. Tu asiento dice en cuál viajas.</p>
+    <p class="hint" style="margin:0 0 12px">Las naves 1 a 5 son las <b>fundadoras</b>: fueron las primeras en despegar, con 5.000 pasajeros cada una. Desde la 6 son <b>naves grandes</b>, de 50.000. Tu asiento dice en cuál viajas.</p>
     <div class="ships" id="ships"></div>
   </section>
 
@@ -124,7 +124,7 @@
     <h2>❓ Preguntas</h2>
     <details><summary>No aparezco en la lista</summary><p>La lista se arma con quienes comentan los videos y con quienes siguen la cuenta durante los directos, desde el 5 de noviembre. Si no apareces, comenta 🚀 y tu bandera en el último video: la lista se actualiza después de cada video.</p></details>
     <details><summary>¿Por qué no sale mi bandera?</summary><p>Tu bandera sale solo si la escribiste en un comentario o en un directo (🇪🇸, 🇲🇽, 🇦🇷… o el nombre del país). Si te sumaste siguiendo la cuenta sin comentarla, todavía no sabemos de dónde eres. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</p></details>
-    <details><summary>¿Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Los primeros 25.000 viajan en las 5 naves fundadoras (5.000 cada una); después vienen las naves grandes, de 15.000.</p></details>
+    <details><summary>¿Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Los primeros 25.000 viajan en las 5 naves fundadoras (5.000 cada una); después vienen las naves grandes, de 50.000.</p></details>
     <details><summary>No quiero aparecer</summary><p>Mándale un mensaje directo a @nosvamosdelatierra con tu nombre de usuario y te quitamos de la lista en la próxima actualización.</p></details>
     <details><summary>¿Qué se muestra de mí?</summary><p>Tu pase solo aparece si alguien escribe tu nombre de usuario exacto: no hay una lista de nombres para mirar ni descargar. El pase muestra la bandera que comentaste, tu asiento y tus insignias. Nunca el texto de tus comentarios.</p></details>
   </section>
@@ -144,9 +144,9 @@ const BADGES = {
   n: ['🎬', 'SALIÓ EN UN VIDEO', 'Su nombre apareció en un video de la serie.', false],
 };
 const SHIPC = ['#ff4f5e', '#3d7bff', '#2fbf71', '#9b5cff', '#ffc93c', '#ff7ad9', '#3cc6dd', '#ff7a45'];
-// Naves 1 a 5: las fundadoras, de 5.000 (despegaron el 12-nov; la 5 es la que dejó de responder, Día 8). Desde la 6: naves grandes de 15.000.
+// Naves 1 a 5: las fundadoras, de 5.000 (despegaron el 12-nov; la 5 es la que dejó de responder, Día 8). Desde la 6: naves grandes de 50.000 (eran de 15.000; German pasó a 50.000 el 14-nov con 113.192 pasajeros para no pasar de 8 naves).
 // Decisión de German (13-nov): como mucho 8 naves. Cuando termine lo de la nave 5, la idea es pasar a 6 naves grandes y 2 chicas.
-const CHICA = 5000, GRANDE = 15000, PERDIDA = 5, FUNDADORAS = 5;
+const CHICA = 5000, GRANDE = 50000, PERDIDA = 5, FUNDADORAS = 5;
 const CAP = i => i < FUNDADORAS ? CHICA : GRANDE;   // capacidad de la nave i (0 = nave 1)
 const START = i => i <= FUNDADORAS ? i * CHICA : FUNDADORAS * CHICA + (i - FUNDADORAS) * GRANDE;   // asientos antes de la nave i
 const naveDe = seat => seat <= FUNDADORAS * CHICA ? Math.ceil(seat / CHICA) : FUNDADORAS + Math.ceil((seat - FUNDADORAS * CHICA) / GRANDE);
