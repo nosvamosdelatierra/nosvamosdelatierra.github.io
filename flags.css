@@ -21,6 +21,7 @@
 .flag.ury::after { content: ''; position: absolute; left: 0; top: 0; width: 40%; height: 55.5%; background: #fff radial-gradient(circle, #fcd116 0 32%, transparent 34%); }
 .flag.ven { background: linear-gradient(#ffcc00 33.3%, #00247d 33.3% 66.6%, #cf142b 66.6%); }
 .flag.ecu { background: linear-gradient(#ffdd00 50%, #034ea2 50% 75%, #ed1c24 75%); }
+.flag.ecu::after { content: ''; position: absolute; left: 50%; top: 48%; width: 20%; height: 40%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(ellipse at 50% 40%, #6fc3ef 0 34%, #2e8b3a 35% 52%, #f4c430 53% 70%, #7a4a1d 71%); box-shadow: 0 0 0 1px #3b2410; }
 .flag.mar { background: #c1272d; }
 .flag.mar::after { content: ''; position: absolute; left: 50%; top: 50%; width: 44%; height: 66%; transform: translate(-50%, -50%); background: #006233; clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
 .flag.hnd { background: linear-gradient(#0073cf 33.3%, #fff 33.3% 66.6%, #0073cf 66.6%); }
