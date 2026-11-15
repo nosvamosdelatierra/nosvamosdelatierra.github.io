@@ -56,6 +56,38 @@
   .pass .badges { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 16px; }
   .chip { display: inline-flex; align-items: center; gap: 6px; background: #eef1f7; border: 3px solid var(--ink); border-radius: 999px; padding: 4px 10px; font-weight: 900; font-size: 13px; }
   .chip.gold { background: var(--yel); }
+  /* insignias: un color cada una, todas del mismo alto, en filas parejas */
+  .pass .badges { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pass .badges .chip { justify-content: center; text-align: center; min-height: 40px; padding: 6px 8px; line-height: 1.1; }
+  .pass .badges .chip:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .b-f { background: #ffc93c; } .b-d { background: #8fd3ff; } .b-k { background: #c9a6ff; } .b-c { background: #7ee0a3; } .b-n { background: #ff9ec0; }
+  .b-v { background: var(--ink); color: #ffd84a; box-shadow: inset 0 0 0 2px #ffd84a; }
+  .pass .note { margin: 0 16px 12px; border: 3px solid var(--ink); border-radius: 14px; padding: 8px 12px; font-size: 14px; font-weight: 900; }
+  /* pase VIP: borde dorado, franja arriba y su rango grande */
+  .pass.vip { border-color: #b8860b; box-shadow: 0 8px 0 #8a6200, 0 0 0 4px #ffd84a, 0 0 26px 6px rgba(255, 196, 0, .55); animation: vipglow 2.6s ease-in-out infinite; }
+  @keyframes vipglow { 50% { box-shadow: 0 8px 0 #8a6200, 0 0 0 4px #ffe680, 0 0 38px 12px rgba(255, 196, 0, .75); } }
+  .pass .vipband { text-align: center; padding: 7px 10px; font: 400 20px 'Lilita One', sans-serif; letter-spacing: 1.5px; color: var(--ink);
+    background: linear-gradient(110deg, #ffb020 0%, #ffe680 30%, #fff8d0 45%, #ffe680 60%, #ffb020 100%); background-size: 250% 100%; animation: shine 3s linear infinite; border-bottom: 4px solid var(--ink); }
+  @keyframes shine { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+  .pass .rango { margin: 0 16px 14px; border: 4px solid var(--ink); border-radius: 18px; padding: 10px 12px; display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(110deg, #ffc93c, #fff1a8 40%, #ffc93c 70%); background-size: 250% 100%; animation: shine 3.5s linear infinite; box-shadow: 0 4px 0 var(--ink); }
+  .pass .rango .ri { font-size: 42px; line-height: 1; filter: drop-shadow(0 2px 0 rgba(0,0,0,.25)); }
+  .pass .rango .rn { font: 400 21px/1.05 'Lilita One', sans-serif; }
+  .pass .rango .rl { font-size: 12px; font-weight: 900; letter-spacing: 1px; color: #6b4b00; margin-top: 3px; }
+  .pass .rango .pips { display: flex; gap: 4px; margin-top: 5px; }
+  .pass .rango .pips i { width: 18px; height: 8px; border: 2px solid var(--ink); border-radius: 4px; background: #fff; }
+  .pass .rango .pips i.on { background: var(--ink); }
+  @media (prefers-reduced-motion: reduce) { .pass.vip, .pass .vipband, .pass .rango { animation: none; } }
+  .pass .puesto { margin: 0 16px 14px; border: 3px solid var(--ink); border-radius: 16px; padding: 8px 12px; display: flex; align-items: center; gap: 12px; background: #eef1f7; }
+  .pass .puesto.sel { background: #dff5e8; border-width: 4px; box-shadow: 0 4px 0 var(--ink); }
+  .pass .puesto .pi { font-size: 34px; line-height: 1; }
+  .pass .puesto .pk { font: 900 11px Nunito, sans-serif; color: var(--muted); letter-spacing: 1.2px; }
+  .pass .puesto .pn { font: 400 22px/1.05 'Lilita One', sans-serif; }
+  .pass .puesto .pe { font-size: 12px; font-weight: 900; color: #1c7c45; letter-spacing: .5px; margin-top: 2px; }
+  .legend div.row { display: grid; grid-template-columns: 158px 1fr; gap: 10px; align-items: center; }
+  .legend .chip { justify-content: center; white-space: nowrap; font-size: 12px; padding: 6px 6px; }
+  .legend .txt { font-size: 14px; line-height: 1.3; }
+  .legend .rangos { display: grid; gap: 2px; margin-top: 4px; font-size: 12.5px; font-weight: 800; color: var(--muted); }
   .pass .pf { display: flex; gap: 8px; padding: 0 16px 16px; flex-wrap: wrap; }
   .btn { font: 900 15px Nunito, sans-serif; color: #fff; background: var(--blue); border: 3px solid var(--ink); border-radius: 14px; box-shadow: 0 4px 0 var(--ink); padding: 10px 14px; cursor: pointer; }
   .btn.sec { background: #fff; color: var(--ink); }
@@ -79,7 +111,7 @@
   .rk .bar i { display: block; height: 100%; }
   .rk .p { font: 400 20px 'Lilita One', sans-serif; text-align: right; }
   .legend { display: grid; gap: 8px; }
-  .legend div { display: flex; gap: 10px; align-items: baseline; }
+
   details { border-top: 3px dashed #c9cfe3; padding: 10px 0; }
   details:first-of-type { border-top: 0; }
   summary { font-weight: 900; cursor: pointer; }
@@ -105,7 +137,7 @@
 
   <section class="card">
     <h2>🚀 Las naves de la flota</h2>
-    <p class="hint" style="margin:0 0 12px">La nave 1 es la <b>fundadora</b>: lleva a los 25.000 que ya estaban antes del primer despegue. Las demás son naves de 35.000. Tu asiento dice en cuál viajas.</p>
+    <p class="hint" style="margin:0 0 12px">La nave 1 es la <b>fundadora</b>: lleva a los 25.000 que ya estaban antes del primer despegue. Las naves 2 a 8 tienen lugar para <span class="navecap">46.429</span> cada una: los que llegan ahora suben a una nave con asientos libres. Tu pase dice en cuál viajas.</p>
     <div class="ships" id="ships"></div>
   </section>
 
@@ -123,10 +155,10 @@
   <section class="card">
     <h2>❓ Preguntas</h2>
     <details><summary>No aparezco en la lista</summary><p>La lista se arma con quienes comentan los videos y con quienes siguen la cuenta durante los directos, desde el 5 de noviembre. Si no apareces, comenta 🚀 y tu bandera en el último video: la lista se actualiza después de cada video.</p></details>
-    <details><summary>¿Por qué no sale mi bandera?</summary><p>Tu bandera sale solo si la escribiste en un comentario o en un directo (🇪🇸, 🇲🇽, 🇦🇷… o el nombre del país). Si te sumaste siguiendo la cuenta sin comentarla, todavía no sabemos de dónde eres. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</p></details>
-    <details><summary>¿Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Los primeros 25.000, los que estaban antes del primer despegue, viajan en la nave fundadora; después vienen las naves de 35.000.</p></details>
+    <details><summary>Por qué no sale mi bandera?</summary><p>Tu bandera sale solo si la escribiste en un comentario o en un directo (🇪🇸, 🇲🇽, 🇦🇷… o el nombre del país). Si te sumaste siguiendo la cuenta sin comentarla, todavía no sabemos de dónde eres. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</p></details>
+    <details><summary>Por qué este asiento?</summary><p>Los asientos van por orden de llegada: quien llegó primero tiene un número más bajo. Los primeros 25.000, los que estaban antes del primer despegue, viajan en la nave fundadora; después vienen las naves 2 a 8, de <span class="navecap">46.429</span> cada una. Los que llegan ahora suben a una de esas naves, elegida al azar entre las que tienen asientos libres.</p></details>
     <details><summary>No quiero aparecer</summary><p>Mándale un mensaje directo a @nosvamosdelatierra con tu nombre de usuario y te quitamos de la lista en la próxima actualización.</p></details>
-    <details><summary>¿Qué se muestra de mí?</summary><p>Tu pase solo aparece si alguien escribe tu nombre de usuario exacto: no hay una lista de nombres para mirar ni descargar. El pase muestra la bandera que comentaste, tu asiento y tus insignias. Nunca el texto de tus comentarios.</p></details>
+    <details><summary>Qué se muestra de mí?</summary><p>Tu pase solo aparece si alguien escribe tu nombre de usuario exacto: no hay una lista de nombres para mirar ni descargar. El pase muestra la bandera que comentaste, tu asiento y tus insignias. Nunca el texto de tus comentarios.</p></details>
   </section>
 
   <footer>Hecho por la flota de @nosvamosdelatierra · Actualizado: <span id="upd"></span></footer>
@@ -140,19 +172,53 @@ const BADGES = {
   d: ['🛫', 'EN EL DESPEGUE', 'Estaba la noche del despegue (11 de noviembre).', false],
   k: ['🕵️', 'DETECTIVE', 'Elegido para investigar al ladrón de la paella.', true],
   c: ['👨‍✈️', 'COPILOTO', 'Viaja al lado del capitán.', true],
-  v: ['⭐', 'VIP', 'Mandó un regalo en un directo.', true],
+  v: ['⭐', 'VIP', 'Mandó regalos en un directo. Su pase brilla en dorado y muestra su rango.', true],
   n: ['🎬', 'SALIÓ EN UN VIDEO', 'Su nombre apareció en un video de la serie.', false],
 };
+// rangos VIP (los mismos del vivo, por 💎 acumulados en los directos). En los datos llega solo el número (1–5).
+const RANGO = [null, ['🔧', 'AYUDANTE DE LA FLOTA'],   // en el vivo se llama «mecánico de la flota»; en la web no, para no confundir con el puesto de mecánico (German, 15-nov)
+   ['⭐', 'PASAJERO VIP'], ['🏆', 'PRIMERA CLASE'], ['🎨', 'NOMBRE PINTADO EN UNA NAVE'], ['👑', 'COMANDANTE DE LA FLOTA']];
+// puesto en la flota: «MECÁNICO@4» = elegido en el video del Día 4; «DETECTIVE@» = lo eligió el capitán; sin @ = se postuló en un comentario
+const PICON = [[/PILOTO/, '✈️'], [/COCINER/, '🍳'], [/M[ÉE]DIC/, '🩺'], [/MEC[ÁA]NIC/, '🔧'], [/SEGURIDAD|SOLDADO|GUARDIA/, '🛡️'], [/MODA/, '👗'], [/INGENIER/, '⚙️'],
+  [/ASTRONAUT/, '🧑‍🚀'], [/CIENT/, '🔬'], [/M[ÚU]SIC/, '🎸'], [/DETECTIVE/, '🕵️'], [/COPILOTO/, '👨‍✈️'], [/CONSTRUCT/, '🧱'], [/PROFESOR/, '📚'], [/EXPLORADOR/, '🧭'],
+  [/PROGRAMADOR/, '💻'], [/AGRICULTOR/, '🌱'], [/AZAFAT/, '🛎️'], [/LIMPIEZA/, '🧹'], [/ARTISTA/, '🎨']];
+function puestoHTML(pu) {
+  if (!pu) return '';
+  const [nom, ep] = pu.split('@'), sel = pu.includes('@'), ic = (PICON.find(([r]) => r.test(nom)) || [, '🧑‍🚀'])[1];
+  return `<div class="puesto ${sel ? 'sel' : ''}"><div class="pi">${ic}</div><div><div class="pk">${sel ? 'PUESTO EN LA FLOTA' : 'SE POSTULÓ PARA'}</div><div class="pn">${esc(nom)}</div>
+    ${sel ? `<div class="pe">✅ ${ep ? 'ELEGIDO EN EL VIDEO DEL DÍA ' + esc(ep) : 'ELEGIDO POR EL CAPITÁN'}</div>` : ''}</div></div>`;
+}
+const LEYENDA = 'fv';   // insignias que se explican en la tarjeta «Insignias» (German, 15-nov). Las demás solo salen en el pase.
 const SHIPC = ['#ff4f5e', '#3d7bff', '#2fbf71', '#9b5cff', '#ffc93c', '#ff7ad9', '#3cc6dd', '#ff7a45'];
-// Decisión de German (14-nov, con 168.609, para el Día 10, cuando se reactiva la nave 5): como mucho 8 naves.
-// Nave 1 = la fundadora, de 25.000: todos los que estaban antes del primer despegue (12-nov 00:09 UTC, ~23.400 pasajeros).
-// Naves 2 en adelante: de 35.000. Así la nave 5 queda llena y en el espacio (asientos 130.001–165.000). Con 8 naves alcanza hasta 270.000.
-// Antes: 1–5 de 5.000, 6–7 de 50.000, 8 de 100.000 (copia en el scratchpad del chat de comentarios).
-const FUNDADORA = 25000, NAVE = 35000, FUNDADORAS = 1, PERDIDA = 5;
-const NAVE5_REACTIVADA = true;   // false = la nave 5 sigue «sin señal» (como antes del Día 10)
-const CAP = i => i < FUNDADORAS ? FUNDADORA : NAVE;   // capacidad de la nave i (0 = nave 1)
-const START = i => { let s = 0; for (let k = 0; k < i; k++) s += CAP(k); return s; };   // asientos antes de la nave i
-const naveDe = seat => { let i = 0; while (seat > START(i + 1)) i++; return i + 1; };
+// Naves (decisión de German del 15-nov; reemplaza las de antes, que siguen valiendo para los asientos viejos):
+// - Siempre 8 naves, todas en la flota (en el espacio). Nave 1 = la fundadora, de 25.000 (los que estaban antes del primer despegue).
+// - Asientos 1–259.802 (BASE): quedan en la nave que tenían (naves 2–7 de 35.000 y la 8 con 24.802). Nadie cambia de nave.
+// - Las naves 2–8 se reparten el objetivo de 350.000: (350.000 − 25.000) / 7 = 46.429 cada una.
+// - Los asientos nuevos (BASE + 1 en adelante) van a una nave al azar entre la 2 y la 8, pesando por los asientos libres.
+//   El azar sale de un hash del número de asiento y se reparte en orden: un asiento depende solo de los anteriores, así
+//   que la misma persona no cambia de nave entre actualizaciones. NO cambiar BASE, OBJETIVO ni hash01 (movería gente):
+//   para un objetivo nuevo, fijar otra BASE con el total de ese día y repartir desde ahí.
+// Antes: 1–5 de 5.000, 6–7 de 50.000, 8 de 100.000; 14-nov: 1 de 25.000 + 35.000 (copias en el scratchpad del chat de comentarios).
+const FUNDADORA = 25000, VIEJA = 35000, BASE = 259802, OBJETIVO = 350000, NAVES = 8, PERDIDA = 5;
+const NAVE5_REACTIVADA = true;   // false = la nave 5 vuelve a «sin señal» (como antes del Día 10)
+const CAPN = Math.ceil((OBJETIVO - FUNDADORA) / (NAVES - 1));   // 46.429: capacidad de las naves 2–8
+const CAP = n => n === 1 ? FUNDADORA : CAPN;                     // capacidad de la nave n (1–8)
+const naveVieja = seat => seat <= FUNDADORA ? 1 : Math.min(NAVES, 2 + Math.floor((seat - FUNDADORA - 1) / VIEJA));
+const VIEJOS = Array.from({ length: NAVES + 1 }, (_, n) => n === 0 ? 0 : n === 1 ? Math.min(BASE, FUNDADORA)
+  : n === NAVES ? Math.max(0, BASE - FUNDADORA - VIEJA * (NAVES - 2)) : Math.max(0, Math.min(VIEJA, BASE - FUNDADORA - VIEJA * (n - 2))));
+const hash01 = n => { let h = (n ^ 0x9e3779b9) >>> 0; h = Math.imul(h ^ (h >>> 16), 0x85ebca6b) >>> 0; h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35) >>> 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+let NUEVOS = new Uint8Array(0);   // NUEVOS[k] = nave del asiento BASE + 1 + k
+function repartir(hasta) {
+  const n = Math.max(0, hasta - BASE); NUEVOS = new Uint8Array(n);
+  const libre = VIEJOS.map((v, k) => k < 2 ? 0 : CAPN - v);
+  for (let k = 0; k < n; k++) {
+    const F = libre.reduce((a, b) => a + b, 0), r = hash01(BASE + 1 + k); let nave;
+    if (F <= 0) nave = 2 + Math.floor(r * (NAVES - 1));   // pasamos el objetivo: sigue al azar (hay que avisar a German)
+    else { let t = r * F; nave = 2; while (t >= libre[nave]) { t -= libre[nave]; nave++; } libre[nave]--; }
+    NUEVOS[k] = nave;
+  }
+}
+const naveDe = seat => seat <= BASE ? naveVieja(seat) : NUEVOS[seat - BASE - 1] || NAVES;
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -178,33 +244,38 @@ async function search(q, scroll = true) {
 }
 function showPass(i, u, scroll = true) {
   const [, f, seat, b, puesto] = DATA.p[i], nave = naveDe(seat), lost = nave === PERDIDA && !NAVE5_REACTIVADA;
-  const bb = nave <= FUNDADORAS && !b.includes('f') ? 'f' + b : b;   // todos los de la nave fundadora son fundadores
-  const chips = [...bb].filter(c => BADGES[c]).map(c => `<span class="chip ${BADGES[c][3] ? 'gold' : ''}">${BADGES[c][0]} ${BADGES[c][1]}</span>`).join('');
-  $('pass').innerHTML = `<div class="pass" id="passcard">
+  const bb = nave === 1 && !b.includes('f') ? 'f' + b : b;   // todos los de la nave fundadora son fundadores
+  const vip = bb.includes('v'), rg = +([...bb].find(c => c >= '1' && c <= '5') || 0);
+  // VIP no va como pastilla: tiene su franja y su rango
+  const chips = 'fkcdn'.split('').filter(c => bb.includes(c)).map(c => `<span class="chip b-${c}">${BADGES[c][0]} ${BADGES[c][1]}</span>`).join('');
+  $('pass').innerHTML = `<div class="pass ${vip ? 'vip' : ''}" id="passcard">
+    ${vip ? '<div class="vipband">⭐ PASAJERO VIP ⭐</div>' : ''}
     <div class="ph"><span>✈️ PASE DE ABORDAR</span><span>VUELO NVT-001</span></div>
-    <div class="pb">${f ? flagHTML(f) : '<div class="noflag">🧑‍🚀</div>'}<div><div class="pu">${esc(u)}</div><div class="pr">${puesto ? esc(puesto) + ' · ' : ''}${f ? COUNTRY[f] || '' : 'SIN BANDERA · ¡COMÉNTALA!'}</div></div></div>
+    <div class="pb">${f ? flagHTML(f) : '<div class="noflag">🧑‍🚀</div>'}<div><div class="pu">${esc(u)}</div><div class="pr">${f ? COUNTRY[f] || '' : 'SIN BANDERA · COMÉNTALA!'}</div></div></div>
     <div class="grid"><div><div class="k">NAVE</div><div class="v" style="color:${SHIPC[(nave - 1) % SHIPC.length]}">${nave}</div></div><div><div class="k">ASIENTO</div><div class="v">${fmt(seat)}</div></div><div><div class="k">DESTINO</div><div class="v" style="font-size:18px">🪐 PLANETA NUEVO</div></div></div>
+    ${puestoHTML(puesto)}
+    ${vip ? `<div class="rango"><div class="ri">${rg ? RANGO[rg][0] : '⭐'}</div><div><div class="rn">${rg ? RANGO[rg][1] : 'PASAJERO VIP'}</div>
+      ${rg ? `<div class="rl">RANGO ${rg} DE 5 · POR LOS 💎 DE LOS DIRECTOS</div><div class="pips">${[1, 2, 3, 4, 5].map(k => `<i class="${k <= rg ? 'on' : ''}"></i>`).join('')}</div>` : '<div class="rl">MANDÓ REGALOS EN UN DIRECTO</div>'}</div></div>` : ''}
     ${chips ? `<div class="badges">${chips}</div>` : ''}
-    ${lost ? `<div class="badges"><span class="chip" style="background:#ffe1e6">📡 Tu nave dejó de responder… Ya vamos a buscarla: mira el último video</span></div>` : ''}
-    ${nave === PERDIDA && NAVE5_REACTIVADA ? `<div class="badges"><span class="chip" style="background:#e3f7ea">🔋 Tu nave volvió a responder: mira el último video</span></div>` : ''}
-    ${nave <= FUNDADORAS ? `<div class="badges"><span class="chip gold">⭐ NAVE FUNDADORA</span></div>` : ''}
-    ${nave === naveDe(DATA.total) && DATA.total - START(nave - 1) < CAP(nave - 1) ? `<div class="badges"><span class="chip" style="background:#fff8e0">🌍 Tu nave está en la Tierra esperando pasajeros: invita a tus amigos y despega antes</span></div>` : ''}
-    ${f ? '' : `<div class="why">🏳️ <b>¿Por qué no sale tu bandera?</b> Porque todavía no la vimos en tus comentarios. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</div>`}
+    ${lost ? `<div class="note" style="background:#ffe1e6">📡 Tu nave dejó de responder… Ya vamos a buscarla: mira el último video</div>` : ''}
+    ${nave === PERDIDA && NAVE5_REACTIVADA ? `<div class="note" style="background:#e3f7ea">🔋 Tu nave volvió a responder: mira el último video</div>` : ''}
+    ${f ? '' : `<div class="why">🏳️ <b>Por qué no sale tu bandera?</b> Porque todavía no la vimos en tus comentarios. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</div>`}
     <div class="pf"><button class="btn" id="share">🔗 Copiar enlace de mi pase</button><button class="btn sec" id="again">🔎 Buscar otro</button></div></div>`;
   history.replaceState(null, '', '#p=' + encodeURIComponent(u));
-  $('share').onclick = () => { const url = location.href; (navigator.share ? navigator.share({ title: 'Mi pase de abordar', text: `Viajo en la nave ${nave}, asiento ${fmt(seat)} 🚀`, url }).catch(() => {}) : navigator.clipboard.writeText(url).then(() => toast('¡Enlace copiado!'))); };
+  $('share').onclick = () => { const url = location.href; (navigator.share ? navigator.share({ title: 'Mi pase de abordar', text: `Viajo en la nave ${nave}, asiento ${fmt(seat)} 🚀`, url }).catch(() => {}) : navigator.clipboard.writeText(url).then(() => toast('Enlace copiado!'))); };
   $('again').onclick = () => { $('q').value = ''; $('pass').innerHTML = ''; $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.'; history.replaceState(null, '', location.pathname); window.scrollTo({ top: 0, behavior: 'smooth' }); $('q').focus(); };
   if (scroll) $('passcard').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 function renderShips() {
-  // cada nave va llena con su capacidad (conozcamos el nombre o no); la que no está llena espera en la Tierra
-  const nShips = naveDe(DATA.total);
-  $('ships').innerHTML = Array.from({ length: nShips }, (_, i) => { const last = i === nShips - 1, lost = i + 1 === PERDIDA && !NAVE5_REACTIVADA, reac = i + 1 === PERDIDA && NAVE5_REACTIVADA, fund = i < FUNDADORAS,
-      cap = CAP(i), filled = last ? DATA.total - START(i) : cap, waiting = last && filled < cap;
-    return `<div class="ship ${lost ? 'lost' : ''} ${waiting ? 'wait' : ''}"><div class="sn" style="color:${SHIPC[i % SHIPC.length]}">🚀 NAVE ${i + 1}</div>
+  // las 8 naves están en la flota; cuenta = asientos viejos + asientos nuevos que le tocaron (conozcamos el nombre o no)
+  const cnt = VIEJOS.slice(); for (let k = 0, n = Math.max(0, DATA.total - BASE); k < n; k++) cnt[NUEVOS[k]]++;
+  $('ships').innerHTML = Array.from({ length: NAVES }, (_, i) => { const n = i + 1, cap = CAP(n), filled = Math.min(cnt[n], DATA.total), quedan = Math.max(0, cap - filled),
+      lost = n === PERDIDA && !NAVE5_REACTIVADA, reac = n === PERDIDA && NAVE5_REACTIVADA, fund = n === 1;
+    const estado = lost ? '<b>📡 SIN SEÑAL</b>' : reac ? '<b>🔋 REACTIVADA</b>' : quedan ? '🛰️ EN LA FLOTA' : '✅ LLENA';
+    return `<div class="ship ${lost ? 'lost' : ''}"><div class="sn" style="color:${SHIPC[i % SHIPC.length]}">🚀 NAVE ${n}</div>
       ${fund ? '<div class="fund">⭐ FUNDADORA</div>' : ''}
-      <div class="ss">${lost ? `<b>📡 SIN SEÑAL</b> · ${fmt(cap)} / ${fmt(cap)}` : waiting ? `🌍 EN LA TIERRA · ESPERANDO PASAJEROS · ${fmt(filled)} / ${fmt(cap)}` : reac ? `<b>🔋 REACTIVADA</b> · EN EL ESPACIO · ${fmt(cap)}` : `✅ LLENA · EN EL ESPACIO · ${fmt(cap)}`}</div>
-      <div class="bar"><i style="width:${filled / cap * 100}%"></i></div></div>`; }).join('');
+      <div class="ss">${estado} · ${fmt(filled)} / ${fmt(cap)}${quedan ? ` · quedan ${fmt(quedan)} asientos` : ''}</div>
+      <div class="bar"><i style="width:${Math.min(100, filled / cap * 100)}%"></i></div></div>`; }).join('');
 }
 function renderRank() {
   const R = DATA.ranking, otros = Math.max(0, 100 - R.reduce((a, r) => a + r[2], 0)), max = R[0][2];
@@ -212,11 +283,15 @@ function renderRank() {
   $('rank').innerHTML = R.map((r, i) => `<span class="n">${i + 1}</span>${flagHTML(r[0])}<span class="c">${esc(r[1])}</span><span class="bar"><i style="width:${r[2] / max * 100}%;background:${col[r[0]] || '#3d7bff'}"></i></span><span class="p">${String(r[2]).replace('.', ',')} %</span>`).join('')
     + `<span class="n">·</span><span>🌐</span><span class="c">OTROS PAÍSES</span><span class="bar"><i style="width:${otros / max * 100}%;background:#c9cfe3"></i></span><span class="p">${otros.toFixed(1).replace('.', ',')} %</span>`;
 }
-function renderLegend() { $('legend').innerHTML = Object.values(BADGES).map(b => `<div><span class="chip ${b[3] ? 'gold' : ''}">${b[0]} ${b[1]}</span><span>${b[2]}</span></div>`).join(''); }
+function renderLegend() {
+  $('legend').innerHTML = LEYENDA.split('').map(c => { const b = BADGES[c]; return `<div class="row"><span class="chip b-${c}">${b[0]} ${b[1]}</span><span class="txt">${b[2]}${c === 'v'
+    ? `<span class="rangos">${RANGO.slice(1).map((r, k) => `<span>${r[0]} ${k + 1}. ${r[1].charAt(0) + r[1].slice(1).toLowerCase()}</span>`).join('')}</span>` : ''}</span></div>`; }).join('');
+}
 
 $('sf').addEventListener('submit', async e => { e.preventDefault(); if (!DATA) return; $('go').disabled = true; try { await search($('q').value); } finally { $('go').disabled = false; } });
 
 fetch('data/pasajeros.json').then(r => r.json()).then(d => {
+  repartir(d.p.reduce((m, r) => Math.max(m, r[2]), d.total)); document.querySelectorAll('.navecap').forEach(e => e.textContent = fmt(CAPN));
   DATA = d; d.p.forEach((r, i) => { if (!IDX.has(r[0])) IDX.set(r[0], i); });
   countUp($('total'), d.total); $('upd').textContent = d.actualizado;
   $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.';
