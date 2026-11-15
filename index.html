@@ -208,7 +208,7 @@ function renderShips() {
 }
 function renderRank() {
   const R = DATA.ranking, otros = Math.max(0, 100 - R.reduce((a, r) => a + r[2], 0)), max = R[0][2];
-  const col = { esp: '#ff3b5c', mex: '#14b85a', arg: '#3d7bff', col: '#ffd23c', chl: '#ff7ad9', ven: '#9b5cff' };
+  const col = { esp: '#ff3b5c', mex: '#14b85a', arg: '#3d7bff', col: '#ffd23c', chl: '#ff7ad9', ven: '#9b5cff', per: '#ff7a45', ecu: '#3cc6dd' };
   $('rank').innerHTML = R.map((r, i) => `<span class="n">${i + 1}</span>${flagHTML(r[0])}<span class="c">${esc(r[1])}</span><span class="bar"><i style="width:${r[2] / max * 100}%;background:${col[r[0]] || '#3d7bff'}"></i></span><span class="p">${String(r[2]).replace('.', ',')} %</span>`).join('')
     + `<span class="n">·</span><span>🌐</span><span class="c">OTROS PAÍSES</span><span class="bar"><i style="width:${otros / max * 100}%;background:#c9cfe3"></i></span><span class="p">${otros.toFixed(1).replace('.', ',')} %</span>`;
 }
