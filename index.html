@@ -139,6 +139,7 @@
     <h2>🚀 Las naves de la flota</h2>
     <p class="hint" style="margin:0 0 12px">La nave 1 es la <b>fundadora</b>: lleva a los 25.000 que ya estaban antes del primer despegue. Las naves 2 a 8 tienen lugar para <span class="navecap">46.429</span> cada una: los que llegan ahora suben a una nave con asientos libres. Tu pase dice en cuál viajas.</p>
     <div class="ships" id="ships"></div>
+    <p class="hint" id="espera" style="margin:10px 4px 0;display:none"></p>
   </section>
 
   <section class="card">
@@ -243,7 +244,7 @@ async function search(q, scroll = true) {
   showPass(i, u, scroll);
 }
 function showPass(i, u, scroll = true) {
-  const [, f, seat, b, puesto] = DATA.p[i], nave = naveDe(seat), lost = nave === PERDIDA && !NAVE5_REACTIVADA;
+  const [, f, seat, b, puesto, nv] = DATA.p[i], nave = nv === undefined ? naveDe(seat) : nv, espera = nave === 0, lost = nave === PERDIDA && !NAVE5_REACTIVADA;
   const bb = nave === 1 && !b.includes('f') ? 'f' + b : b;   // todos los de la nave fundadora son fundadores
   const vip = bb.includes('v'), rg = +([...bb].find(c => c >= '1' && c <= '5') || 0);
   // VIP no va como pastilla: tiene su franja y su rango
@@ -252,7 +253,8 @@ function showPass(i, u, scroll = true) {
     ${vip ? '<div class="vipband">⭐ PASAJERO VIP ⭐</div>' : ''}
     <div class="ph"><span>✈️ PASE DE ABORDAR</span><span>VUELO NVT-001</span></div>
     <div class="pb">${f ? flagHTML(f) : '<div class="noflag">🧑‍🚀</div>'}<div><div class="pu">${esc(u)}</div><div class="pr">${f ? COUNTRY[f] || '' : 'SIN BANDERA · COMÉNTALA!'}</div></div></div>
-    <div class="grid"><div><div class="k">NAVE</div><div class="v" style="color:${SHIPC[(nave - 1) % SHIPC.length]}">${nave}</div></div><div><div class="k">ASIENTO</div><div class="v">${fmt(seat)}</div></div><div><div class="k">DESTINO</div><div class="v" style="font-size:18px">🪐 PLANETA NUEVO</div></div></div>
+    <div class="grid"><div><div class="k">NAVE</div><div class="v" style="color:${espera ? 'var(--muted)' : SHIPC[(nave - 1) % SHIPC.length]}">${espera ? '⏳' : nave}</div></div><div><div class="k">ASIENTO</div><div class="v">${fmt(seat)}</div></div><div><div class="k">DESTINO</div><div class="v" style="font-size:18px">🪐 PLANETA NUEVO</div></div></div>
+    ${espera ? `<div class="note" style="background:#fff8e0">📋 EN LA LISTA DE ESPERA · subes en la próxima lanzadera</div>` : ''}
     ${puestoHTML(puesto)}
     ${vip ? `<div class="rango"><div class="ri">${rg ? RANGO[rg][0] : '⭐'}</div><div><div class="rn">${rg ? RANGO[rg][1] : 'PASAJERO VIP'}</div>
       ${rg ? `<div class="rl">RANGO ${rg} DE 5 · POR LOS 💎 DE LOS DIRECTOS</div><div class="pips">${[1, 2, 3, 4, 5].map(k => `<i class="${k <= rg ? 'on' : ''}"></i>`).join('')}</div>` : '<div class="rl">MANDÓ REGALOS EN UN DIRECTO</div>'}</div></div>` : ''}
@@ -262,13 +264,14 @@ function showPass(i, u, scroll = true) {
     ${f ? '' : `<div class="why">🏳️ <b>Por qué no sale tu bandera?</b> Porque todavía no la vimos en tus comentarios. Comenta 🚀 y tu bandera en el último video y aparece en la próxima actualización.</div>`}
     <div class="pf"><button class="btn" id="share">🔗 Copiar enlace de mi pase</button><button class="btn sec" id="again">🔎 Buscar otro</button></div></div>`;
   history.replaceState(null, '', '#p=' + encodeURIComponent(u));
-  $('share').onclick = () => { const url = location.href; (navigator.share ? navigator.share({ title: 'Mi pase de abordar', text: `Viajo en la nave ${nave}, asiento ${fmt(seat)} 🚀`, url }).catch(() => {}) : navigator.clipboard.writeText(url).then(() => toast('Enlace copiado!'))); };
+  $('share').onclick = () => { const url = location.href; (navigator.share ? navigator.share({ title: 'Mi pase de abordar', text: espera ? `Estoy en la lista de espera de la flota, asiento ${fmt(seat)} 🚀` : `Viajo en la nave ${nave}, asiento ${fmt(seat)} 🚀`, url }).catch(() => {}) : navigator.clipboard.writeText(url).then(() => toast('Enlace copiado!'))); };
   $('again').onclick = () => { $('q').value = ''; $('pass').innerHTML = ''; $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.'; history.replaceState(null, '', location.pathname); window.scrollTo({ top: 0, behavior: 'smooth' }); $('q').focus(); };
   if (scroll) $('passcard').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 function renderShips() {
   // las 8 naves están en la flota; cuenta = asientos viejos + asientos nuevos que le tocaron (conozcamos el nombre o no)
-  const cnt = VIEJOS.slice(); for (let k = 0, n = Math.max(0, DATA.total - BASE); k < n; k++) cnt[NUEVOS[k]]++;
+  const cnt = DATA.naves ? DATA.naves.n.slice() : VIEJOS.slice(); if (!DATA.naves) for (let k = 0, n = Math.max(0, DATA.total - BASE); k < n; k++) cnt[NUEVOS[k]]++;
+  if (DATA.naves && DATA.naves.espera) { $('espera').style.display = ''; $('espera').textContent = `📋 ${fmt(DATA.naves.espera)} pasajeros del último directo esperan su lanzadera.`; }
   $('ships').innerHTML = Array.from({ length: NAVES }, (_, i) => { const n = i + 1, cap = CAP(n), filled = Math.min(cnt[n], DATA.total), quedan = Math.max(0, cap - filled),
       lost = n === PERDIDA && !NAVE5_REACTIVADA, reac = n === PERDIDA && NAVE5_REACTIVADA, fund = n === 1;
     const estado = lost ? '<b>📡 SIN SEÑAL</b>' : reac ? '<b>🔋 REACTIVADA</b>' : quedan ? '🛰️ EN LA FLOTA' : '✅ LLENA';
@@ -291,7 +294,7 @@ function renderLegend() {
 $('sf').addEventListener('submit', async e => { e.preventDefault(); if (!DATA) return; $('go').disabled = true; try { await search($('q').value); } finally { $('go').disabled = false; } });
 
 fetch('data/pasajeros.json').then(r => r.json()).then(d => {
-  repartir(d.p.reduce((m, r) => Math.max(m, r[2]), d.total)); document.querySelectorAll('.navecap').forEach(e => e.textContent = fmt(CAPN));
+  if (!d.naves) repartir(d.p.reduce((m, r) => Math.max(m, r[2]), d.total));   // desde el 15-nov armar.py trae la nave de cada uno (lanzaderas incluidas) document.querySelectorAll('.navecap').forEach(e => e.textContent = fmt(CAPN));
   DATA = d; d.p.forEach((r, i) => { if (!IDX.has(r[0])) IDX.set(r[0], i); });
   countUp($('total'), d.total); $('upd').textContent = d.actualizado;
   $('hint').textContent = 'Escribe tu nombre de usuario completo y toca BUSCAR.';
